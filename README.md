@@ -109,6 +109,7 @@ And there we have it!! A working client / server pair. But - one other thing. Th
 - Base64 Data Transfer Handler
 - An XMLRPC function register wrapper, with builtin monkey patch from Diffused XML.
 - AsyncIO Servers and Clients for async functionality.
+- Rentry API Support (file storage).
 
 ### Future
 
