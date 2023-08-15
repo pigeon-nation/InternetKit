@@ -19,6 +19,9 @@ InternetKit also builds threading right into it's usage. Allow your server to ha
 \
 With all these features, InternetKit is a good server ***and*** client framework for all your internet needs.
 
+## Installation
+Currently, this is not on PyPi. Just download as a zip and move to the site-packages folder. Sorry for the inconvinience. This is just because this is being rapidly updated.
+
 ## Basic Usage
 Where do we start? Well, first of all, lets take a look at a simple socket example: 
 
@@ -105,6 +108,7 @@ And there we have it!! A working client / server pair. But - one other thing. Th
 - JSON Data Transfer Handler
 - Base64 Data Transfer Handler
 - An XMLRPC function register wrapper, with builtin monkey patch from Diffused XML.
+- AsyncIO Servers and Clients for async functionality.
 
 ### Future
 
