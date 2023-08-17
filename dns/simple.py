@@ -11,4 +11,4 @@ class Lookup:
 	def name(self):
 		return socket.gethostname()
 	
-x = Lookup()
+

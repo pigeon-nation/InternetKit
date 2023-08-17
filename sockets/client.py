@@ -50,6 +50,6 @@ class Socket:
 			new = sock.recv(4096)
 			yield new
 	
-	def close(seld):
+	def close(self):
 		assert self.is_setup, 'Error!! You have to connect first! (use conn.setup(), then conn.connect()).'
 		self.sock.close()

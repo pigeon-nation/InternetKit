@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import threading
 from .sconn import Conn
 import socket
 
@@ -15,21 +16,21 @@ class SockServer:
 		self.sock.bind((self.host, self.port))
 		self.sock.listen()
 	
-	def unthreaded_connloop(self, target):
+	def ut_raw_loop(self, target):
 		while 1:
 			conn, addr = self.sock.accept()
 			threading.Thread(target=lambda: target(conn, addr)).start()
 	
-	def threaded_connloop(self, target):
-		threading.Thread(target=lambda: self.unthreaded_connloop(target)).start()
+	def raw_loop(self, target):
+		threading.Thread(target=lambda: self.ut_raw_loop(target)).start()
 	
-	def ut_sconnloop(self, target):
+	def ut_loop(self, target):
 		while 1:
 			conn, addr = self.sock.accept()
 			threading.Thread(target=lambda: target(Conn(conn), addr)).start()
 	
-	def sconnloop(self, target):
-		threading.Thread(target=lambda: self.utcnlp(target)).start()
+	def loop(self, target):
+		threading.Thread(target=lambda: self.ut_loop(target)).start()
 	
 	def close(self):
 		self.sock.close()
