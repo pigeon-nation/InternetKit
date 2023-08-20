@@ -16,21 +16,21 @@ class SockServer:
 		self.sock.bind((self.host, self.port))
 		self.sock.listen()
 	
-	def ut_raw_loop(self, target):
+	def ut_raw_loop(self, target, *a, **k):
 		while 1:
 			conn, addr = self.sock.accept()
-			threading.Thread(target=lambda: target(conn, addr)).start()
+			threading.Thread(target=lambda: target(conn, addr, *a, **k)).start()
 	
-	def raw_loop(self, target):
-		threading.Thread(target=lambda: self.ut_raw_loop(target)).start()
+	def raw_loop(self, target, *a, **k):
+		threading.Thread(target=lambda: self.ut_raw_loop(target, *a, **k)).start()
 	
-	def ut_loop(self, target):
+	def ut_loop(self, target, *a, **k):
 		while 1:
 			conn, addr = self.sock.accept()
-			threading.Thread(target=lambda: target(Conn(conn), addr)).start()
+			threading.Thread(target=lambda: target(Conn(conn), addr, *a, **k)).start()
 	
-	def loop(self, target):
-		threading.Thread(target=lambda: self.ut_loop(target)).start()
+	def loop(self, target, *a, **k):
+		threading.Thread(target=lambda: self.ut_loop(target, *a, **k)).start()
 	
 	def close(self):
 		self.sock.close()
