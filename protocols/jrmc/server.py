@@ -3,6 +3,17 @@
 import json
 import copy
 
+def standard_ec_lookup():
+	return {
+		'invld-req': 0,
+		'srv-side': 1,
+		'dt-tm': 2,
+		'dt-lb-tl': 30,
+		'dt-dt-tl': 35,
+		'invld-lbl': 4
+	}
+	
+
 class JRMCServer:
 	#####################
 	# Pre-Server-Start. #
@@ -10,7 +21,8 @@ class JRMCServer:
 	
 	# Init
 	
-	def __init__(self):
+	def __init__(self, eclu=standard_ec_lookup()):
+		self.eclu = eclu
 		self.reset()
 		
 	# Wrapper
@@ -54,7 +66,14 @@ class JRMCServer:
 		self.mthds = {}
 	
 	def fail(self, info, etyp):
-		return [inf, etyp] # todo - add more info.
+		return {
+			'status': 'error',
+			'error': {
+				'info': info,
+				'type': etyp,
+				'code': self.eclu[etyp]
+			}
+		}
 
 class JRMCConnection:
 	def __init__(self, conn, addr, server):
@@ -131,4 +150,22 @@ class JRMCConnection:
 			else:
 				self.conn.send(json.dumps(self.server.fail('Data too long. Limit is 66.', 'dt-dt-tl')))
 			
+			return False
+		
+		elif req['req'] == 'tempget':
+			if json.loads(req['label']) in self.session.keys():
+				self.conn.send(json.dumps(self.session[json.loads(req['label'])]))
+			else:
+				self.conn.send(json.dumps(self.server.fail('Invalid label.', 'invld-lbl')))
+			return False
+		
+		elif req['req'] == 'tempdel':
+			if json.loads(req['label']) in self.session.keys():
+				del self.session[json.loads(req['label'])]
+			else:
+				self.conn.send(json.dumps(self.server.fail('Invalid label.', 'invld-lbl')))
+			return False
+		
+		elif req['req'] == 'tempclear':
+			self.session = {}
 			return False
