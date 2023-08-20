@@ -92,7 +92,7 @@ class JRMCConnection:
 				self.conn.send(json.dumps(self.server.fail('Invalid Request.', 'invld-req')))
 			else:
 				try:
-					res = mthd(*args, **kwargs)
+					res = mthd(*args, session=self.session, **kwgs)
 				except:
 					self.conn.send(json.dumps(self.server.fail('Server Side Error - Check if your args and/or kwargs are valid.', 'srv-side')))
 				else:
@@ -100,6 +100,25 @@ class JRMCConnection:
 						self.conn.send(json.dumps(res))
 				
 			return False
+		
+		elif req['request'] == 'blindexec':
+			try:
+				mthd = self.server[req['method']]
+				args = self.server[req['args']]
+				kwgs = self.server[req['kwargs']]
+			except:
+				self.conn.send(json.dumps(self.server.fail('Invalid Request.', 'invld-req')))
+			else:
+				try:
+					res = mthd(*args, session='blind', **kwgs)
+				except:
+					self.conn.send(json.dumps(self.server.fail('Server Side Error - Check if your args and/or kwargs are valid.', 'srv-side')))
+				else:
+					if req['return']:
+						self.conn.send(json.dumps(res))
+						
+			return False
+		
 		elif req['req'] == 'tempstore':
 			if len(req['data']) < 67:
 				if len(req['label']) < 67:
