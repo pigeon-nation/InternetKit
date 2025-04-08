@@ -12,7 +12,7 @@ On a Mac, press the spacebar while the file is selected to view info.
 
 #### Usage limits:
 
-These certs are free to use, but are `NOT RECCOMENDED FOR PRODUCTION`. \
+These certs are free to use, but `DO NOT USE THEM FOR PRODUCTION`. \
 Thank you for using **InternetKit**!!
 
 #### Disclaimer:
