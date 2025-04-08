@@ -124,7 +124,7 @@ And there we have it!! A working client / server pair. But - one other thing. Th
 
 > These are deprecated features, soon to be removed. 
 
-- Nothing here, this thing is VERY NEW.
+- Nothing here, this thing is VERY NEW (VERY OLD now).
 
 ## Credits
 
