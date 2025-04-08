@@ -1,6 +1,6 @@
 import base64
 
-class JSONProtocol:
+class B64Protocol:
 	def __init__(self, conn):
 		self.conn = conn
 	
